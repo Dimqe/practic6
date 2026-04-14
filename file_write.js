@@ -5,10 +5,8 @@ const path = require('path');
 const PORT = process.argv[2] || 3000;
 
 const server = http.createServer((req, res) => {
-  // Логування для відладки
   console.log(`Отримано запит: ${req.method} ${req.url}`);
 
-  // Очищуємо URL від зайвих параметрів для порівняння
   const url = req.url.split('?')[0];
 
   if (req.method === 'POST' && (url === '/data' || url === '/data/')) {
