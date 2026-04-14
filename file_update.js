@@ -6,7 +6,6 @@ const PORT = process.argv[2] || 3000;
 const FILE_PATH = path.join(process.cwd(), 'data.json');
 
 const server = http.createServer((req, res) => {
-  // Розбиваємо шлях: /data/2 -> ['', 'data', '2']
   const segments = req.url.split('/');
   const id = parseInt(segments[2]);
 
@@ -17,7 +16,6 @@ const server = http.createServer((req, res) => {
       try {
         const updateData = JSON.parse(body);
 
-        // Читаємо файл
         fs.readFile(FILE_PATH, 'utf8', (err, data) => {
           if (err) {
             res.writeHead(500);
@@ -32,10 +30,8 @@ const server = http.createServer((req, res) => {
             return res.end('Not Found');
           }
 
-          // Оновлюємо об'єкт
           items[index] = { ...items[index], ...updateData, id };
 
-          // Записуємо назад
           fs.writeFile(FILE_PATH, JSON.stringify(items, null, 2), (err) => {
             if (err) {
               res.writeHead(500);
